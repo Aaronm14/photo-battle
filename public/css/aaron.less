@@ -1,0 +1,57 @@
+/* Voting */
+.voting-container {
+  h2 {
+    margin-top:0;
+  }
+  .vs-col {
+    text-align:center;
+    .vs {
+      font-size:27px;
+      font-weight:bold;
+    }
+  }
+}
+.voting-image {
+  position:relative;
+  cursor:pointer;
+  img{
+    width:100%;
+  }
+  &:hover .vote-overlay {
+    opacity:1;
+    transition:all 0.5s;
+  }
+}
+.vote-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity:0;
+  i {
+    font-size: 60px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    margin: -45px auto 0 auto;
+    left: 0;
+    text-align: center;
+    right: 0;
+    border: 5px solid #FFF;
+    border-radius: 60px;
+    width: 90px;
+    padding: 10px;
+    &:hover {
+      color:#8AC587;
+      border-color:#8AC587;
+      transition:all .25s;
+    }
+    &:active {
+      color:#3ABD31;
+      border-color:#3ABD31;
+      transition:all .25s;
+    }
+  }
+}
