@@ -20,3 +20,7 @@ block content
           img(src="/images/sloth-bachelor-rose-ceremony.png")
           .vote-overlay
             i.fa.fa-check
+
+div(ng-controller="VoteCtrl")
+  p(ng-repeat="photo in photos")
+    {{ photo.url }}
