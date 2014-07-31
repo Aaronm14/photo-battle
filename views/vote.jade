@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  .voting-container
+  .voting-container(ng-controller="VoteCtrl")
     h1 Sexy Bachelor
     p.lead Which bachelor photoshop is better?
     hr
@@ -21,6 +21,5 @@ block content
           .vote-overlay
             i.fa.fa-check
 
-div(ng-controller="VoteCtrl")
-  p(ng-repeat="photo in photos")
-    {{ photo.url }}
+  div(ng-controller="PhotoCtrl")
+    <img src="{{ src }}">
