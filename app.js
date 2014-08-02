@@ -137,6 +137,21 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 
 app.get('/vote', voteController.vote);
+
+/**
+* local api
+*/
+var Photo = require('./models/Photo.js');
+
+app.get('/photos', function(req, res) {
+  Photo.find(function(err, photos) {
+    if (err)
+      res.send(err);
+    res.json(photos);
+  });
+});
+
+
 /**
  * API examples routes.
  */
