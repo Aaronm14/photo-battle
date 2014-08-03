@@ -5,7 +5,7 @@
 var Challenge = require('../models/Challenge');
 var Photo = require('../models/Photo');
 
-var challenge = new Challenge({ subject: "bachelor" });
+/*var challenge = new Challenge({ subject: "bachelor" });
 challenge.save(function (err) {
   if (err) return console.error(err);
 });
@@ -15,7 +15,7 @@ photo.save(function (err) {
   if (err) return console.error(err);
 });
 
-/*Challenge.findOne({ subject: "bachelor" }).exec(function (err, challenge) {
+Challenge.findOne({ subject: "bachelor" }).exec(function (err, challenge) {
    if (err) return console.error(err);
 
    //add photo

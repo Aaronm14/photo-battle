@@ -22,4 +22,6 @@ block content
             i.fa.fa-check
 
   div(ng-controller="PhotoCtrl")
-    <img src="{{ src }}">
+    ul
+      li(ng-repeat="photo in photos")
+        p {{photo.url}}

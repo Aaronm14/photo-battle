@@ -6,6 +6,24 @@ app.controller('VoteCtrl', function($scope) {
   };
 });
 
-app.controller('PhotoCtrl', ['$scope', function($scope) {
-  $scope.src = '/images/bachelor-juanpablo-nikki.jpg';
+/* app.factory('Photo', ['$http', function($http) {
+  $http.get('/photos')
+    .success(function(data) {
+      $scope.photos = data;
+      console.log(data);
+    })
+    .error(function(data) {
+      console.log('Error, data: ' + data);
+    });
+}]); */
+
+app.controller('PhotoCtrl', ['$scope', '$http', function($scope, $http) {
+  $http.get('/photos')
+    .success(function(data) {
+      $scope.photos = data;
+      console.log(data);
+    })
+    .error(function(data) {
+      console.log('Error, data: ' + data);
+    });
 }]);
