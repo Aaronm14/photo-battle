@@ -151,6 +151,15 @@ app.get('/photos', function(req, res) {
   });
 });
 
+var Challenge = require('./models/Challenge.js');
+
+app.get('/challenges', function(req, res) {
+  Challenge.find( function(err, challenges) {
+    if (err)
+      res.send(err);
+    res.json(challenges);
+  });
+});
 
 /**
  * API examples routes.

@@ -27,3 +27,12 @@ block content
         p {{photo.url}}
         p {{photo.downVotes}}
         p {{photo.upVotes}}
+  div(ng-controller="ChallengeCtrl")
+    ul
+      li(ng-repeat="challenge in challenges")
+        p {{challenge.subject}}
+        ul
+          li(ng-repeat="photo in photos")
+            p {{photo.url}}
+            p {{photo.downVotes}}
+            p {{photo.upVotes}}
