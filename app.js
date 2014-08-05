@@ -144,7 +144,7 @@ app.get('/vote', voteController.vote);
 var Photo = require('./models/Photo.js');
 
 app.get('/photos', function(req, res) {
-  Photo.find(function(err, photos) {
+  Photo.find({},{},{ limit: 5 }, function(err, photos) {
     if (err)
       res.send(err);
     res.json(photos);
