@@ -3,9 +3,9 @@
  * Voting page.
  */
 var Challenge = require('../models/Challenge');
-var Photo = require('../models/Photo');
+var Photo = require('../models/Photos');
 
-var photo1= new Photo({ url: "/images/bachelor-juanpablo-nikki.jpg", upVotes: 0, downVotes: 0 });
+/*var photo1= new Photo({ url: "/images/bachelor-juanpablo-nikki.jpg", upVotes: 0, downVotes: 0 });
 photo1.save(function (err) {
   if (err) return console.error(err);
 });
@@ -16,7 +16,14 @@ photo2.save(function (err) {
 var challenge = new Challenge({
   subject: "bachelor",
   photos: [photo1,photo2]
-});
+});*/
+/*var challenge = new Challenge ({ subject:'test', photos: [Photo._id] });
+challenge.save(function() {
+  challenge.populate('photos').exec(function(error, challenges) {
+    Photo.populate(challenges.photos, {url: '/images/bachelor-juanpablo-nikki.jpg', upVotes: 0, downVotes: 0});
+    console.log(challenges[0][0].subject)
+  });
+});*/
 /*
 var photo = new Photo({ url: "/images/bachelor-juanpablo-nikki.jpg", upVotes: 0, downVotes: 0 });
 photo.save(function (err) {

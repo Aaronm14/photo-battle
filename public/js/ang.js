@@ -18,7 +18,7 @@ app.controller('VoteCtrl', function($scope) {
 }]); */
 
 app.controller('PhotoCtrl', ['$scope', '$http', function($scope, $http) {
-  $http.get('/photos')
+  $http.get('/api/photos')
     .success(function(data) {
       $scope.photos = data;
       console.log(data);
@@ -28,7 +28,7 @@ app.controller('PhotoCtrl', ['$scope', '$http', function($scope, $http) {
     });
 }]);
 app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
-  $http.get('/challenges')
+  $http.get('/api/challenges')
     .success(function(data) {
       $scope.challenges = data;
       $scope.photos = $scope.challenges.photos;
@@ -37,4 +37,16 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
     .error(function(data) {
       console.log('Error, data: ' + data);
     });
+
+    $scope.createChallenge = function() {
+      $http.post('/api/challenges', $scope.formData)
+        .success(function(data) {
+          $scope.formData = {};
+          $scope.challenge = data;
+          console.log("data " + data);
+        })
+        .error(function(data) {
+          console.log('Error: ' + JSON.stringify(data));
+        });
+    };
 }]);

@@ -141,10 +141,10 @@ app.get('/vote', voteController.vote);
 /**
 * local api
 */
-var Photo = require('./models/Photo.js');
+var Photos = require('./models/Photos.js');
 
-app.get('/photos', function(req, res) {
-  Photo.find({},{},{ limit: 5 }, function(err, photos) {
+app.get('/api/photos', function(req, res) {
+  Photos.find({},{},{ limit: 5 }, function(err, photos) {
     if (err)
       res.send(err);
     res.json(photos);
@@ -153,7 +153,7 @@ app.get('/photos', function(req, res) {
 
 var Challenge = require('./models/Challenge.js');
 
-app.get('/challenges', function(req, res) {
+app.get('/api/challenges', function(req, res) {
   Challenge.find( function(err, challenges) {
     if (err)
       res.send(err);
@@ -161,6 +161,22 @@ app.get('/challenges', function(req, res) {
   });
 });
 
+app.post('/api/challenges', function(req, res) {
+  Challenge.create({
+    url: req.body.subject,
+    photos: req.body.photos
+  }, function(err, challenge) {
+    if (err)
+      res.send(err);
+      console.log(Challenge);
+      Challenge.find( function(err, challenges) {
+        if (err)
+          res.send(err);
+        console.log(challenges);
+        res.json(challenges);
+      });
+  });
+});
 /**
  * API examples routes.
  */
