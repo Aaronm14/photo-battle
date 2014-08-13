@@ -61,7 +61,7 @@ var week = day * 7;
  * CSRF whitelist.
  */
 
-var csrfExclude = ['/url1', '/url2'];
+var csrfExclude = ['/url1', '/url2','/api/','/api/challenges'];
 
 /**
  * Express configuration.
@@ -150,7 +150,7 @@ app.get('/api/photos', function(req, res) {
     res.json(photos);
   });
 });
-
+mongoose.set('debug', true);
 var Challenge = require('./models/Challenge.js');
 
 app.get('/api/challenges', function(req, res) {
@@ -162,7 +162,7 @@ app.get('/api/challenges', function(req, res) {
 });
 
 app.post('/api/challenges', function(req, res) {
-  Challenge.create({
+  /* Challenge.create({
     url: req.body.subject,
     photos: req.body.photos
   }, function(err, challenge) {
@@ -175,6 +175,25 @@ app.post('/api/challenges', function(req, res) {
         console.log(challenges);
         res.json(challenges);
       });
+  }); */
+  var challenge = new Challenge({
+    subject: req.body.subject
+  });
+  challenge.save(function(err, challenge) {
+    if(err) {
+      res.json(error);
+    }
+    else {
+      challenge.photos.push({url: req.body.url });
+      challenge.save( function(err, data) {
+        if(err) {
+          res.json(error);
+        }
+        else {
+          res.json(data);
+        }
+      });
+    }
   });
 });
 /**

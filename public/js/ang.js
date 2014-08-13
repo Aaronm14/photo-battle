@@ -32,7 +32,7 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
     .success(function(data) {
       $scope.challenges = data;
       $scope.photos = $scope.challenges.photos;
-      console.log(JSON.stringify(data));
+      console.log("GET data: " + JSON.stringify(data));
     })
     .error(function(data) {
       console.log('Error, data: ' + data);
