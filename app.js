@@ -61,7 +61,7 @@ var week = day * 7;
  * CSRF whitelist.
  */
 
-var csrfExclude = ['/url1', '/url2'];
+var csrfExclude = ['/url1', '/url2','/api/','/api/challenges'];
 
 /**
  * Express configuration.
@@ -137,6 +137,87 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
 
 app.get('/vote', voteController.vote);
+
+/**
+* local api
+*/
+var Photos = require('./models/Photos.js');
+
+app.get('/api/photos', function(req, res) {
+  Photos.find({},{},{ limit: 5 }, function(err, photos) {
+    if (err)
+      res.send(err);
+    res.json(photos);
+  });
+});
+mongoose.set('debug', true);
+var Challenge = require('./models/Challenge.js');
+
+app.get('/api/challenges', function(req, res) {
+  Challenge.find( function(err, challenges) {
+    if (err)
+      res.send(err);
+    res.json(challenges);
+  });
+});
+
+app.put('/api/challenges', function(req, res) {
+  Challenge.findById
+});
+
+app.post('/api/challenges', function(req, res) {
+  /* Challenge.create({
+    url: req.body.subject,
+    photos: req.body.photos
+  }, function(err, challenge) {
+    if (err)
+      res.send(err);
+      console.log(Challenge);
+      Challenge.find( function(err, challenges) {
+        if (err)
+          res.send(err);
+        console.log(challenges);
+        res.json(challenges);
+      });
+  }); */
+  var challenge = new Challenge({
+    subject: req.body.subject,
+    /*photos: {
+      url: req.body.url,
+      downVotes: req.body.downVotes,
+      upVotes: req.body.upVotes
+    }*/
+  });
+  challenge.save(function(err, challenge) {
+    if(err) {
+      res.json(error);
+    }
+    else {
+      Challenge.update(
+        {_id: challenge.id},
+        {$push: {
+          'photos': {
+            url: req.body.url,
+            upVotes: req.body.upVotes,
+            downVotes: req.body.downVotes
+          }
+        }
+        },
+        function(err, model) {
+          console.log(err);
+        }
+      );
+      challenge.save( function(err, data) {
+        if(err) {
+          res.json(error);
+        }
+        else {
+          res.json(data);
+        }
+      });
+    }
+  });
+});
 /**
  * API examples routes.
  */
