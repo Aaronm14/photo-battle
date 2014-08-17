@@ -161,6 +161,10 @@ app.get('/api/challenges', function(req, res) {
   });
 });
 
+app.put('/api/challenges', function(req, res) {
+  Challenge.findById
+});
+
 app.post('/api/challenges', function(req, res) {
   /* Challenge.create({
     url: req.body.subject,
@@ -177,14 +181,32 @@ app.post('/api/challenges', function(req, res) {
       });
   }); */
   var challenge = new Challenge({
-    subject: req.body.subject
+    subject: req.body.subject,
+    /*photos: {
+      url: req.body.url,
+      downVotes: req.body.downVotes,
+      upVotes: req.body.upVotes
+    }*/
   });
   challenge.save(function(err, challenge) {
     if(err) {
       res.json(error);
     }
     else {
-      challenge.photos.push({url: req.body.url });
+      Challenge.update(
+        {_id: challenge.id},
+        {$push: {
+          'photos': {
+            url: req.body.url,
+            upVotes: req.body.upVotes,
+            downVotes: req.body.downVotes
+          }
+        }
+        },
+        function(err, model) {
+          console.log(err);
+        }
+      );
       challenge.save( function(err, data) {
         if(err) {
           res.json(error);
