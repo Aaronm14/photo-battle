@@ -49,4 +49,16 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
           console.log('Error: ' + JSON.stringify(data));
         });
     };
+
+    $scope.addPhoto = function() {
+      $http.put('/api/challenges', $scope.formData)
+        .success(function(data) {
+          $scope.formData = {};
+          $scope.photo = data;
+          console.log("photo: " + JSON.stringify(data));
+        })
+        .error(function(data) {
+          console.log('Error: ' + JSON.stringify(data));
+        });
+    };
 }]);

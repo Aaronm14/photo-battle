@@ -162,31 +162,40 @@ app.get('/api/challenges', function(req, res) {
 });
 
 app.put('/api/challenges', function(req, res) {
-  Challenge.findById
+  Challenge.findById(req.body.id._id, function(err, challenge) {
+    if(err)
+      res.json(err);
+    else {
+      Challenge.update(
+        {_id: challenge.id},
+        {$push: {
+          'photos': {
+            url: req.body.url,
+            upVotes: req.body.upVotes,
+            downVotes: req.body.downVotes
+          }
+        }
+        },
+        function(err, model) {
+          console.log(err);
+        }
+      );
+      challenge.save( function(err, data) {
+        if(err) {
+          res.json(err);
+        }
+        else {
+          res.json(data);
+        }
+      });
+    }
+  });
 });
 
 app.post('/api/challenges', function(req, res) {
-  /* Challenge.create({
-    url: req.body.subject,
-    photos: req.body.photos
-  }, function(err, challenge) {
-    if (err)
-      res.send(err);
-      console.log(Challenge);
-      Challenge.find( function(err, challenges) {
-        if (err)
-          res.send(err);
-        console.log(challenges);
-        res.json(challenges);
-      });
-  }); */
+
   var challenge = new Challenge({
     subject: req.body.subject,
-    /*photos: {
-      url: req.body.url,
-      downVotes: req.body.downVotes,
-      upVotes: req.body.upVotes
-    }*/
   });
   challenge.save(function(err, challenge) {
     if(err) {
