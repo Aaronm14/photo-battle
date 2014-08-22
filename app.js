@@ -166,20 +166,9 @@ app.put('/api/challenges', function(req, res) {
     if(err)
       res.json(err);
     else {
-      Challenge.update(
-        {_id: challenge.id},
-        {$push: {
-          'photos': {
-            url: req.body.url,
+      challenge.photos.push({url: req.body.url,
             upVotes: req.body.upVotes,
-            downVotes: req.body.downVotes
-          }
-        }
-        },
-        function(err, model) {
-          console.log(err);
-        }
-      );
+            downVotes: req.body.downVotes});
       challenge.save( function(err, data) {
         if(err) {
           res.json(err);
@@ -202,7 +191,7 @@ app.post('/api/challenges', function(req, res) {
       res.json(error);
     }
     else {
-      Challenge.update(
+      /*Challenge.update(
         {_id: challenge.id},
         {$push: {
           'photos': {
@@ -215,7 +204,7 @@ app.post('/api/challenges', function(req, res) {
         function(err, model) {
           console.log(err);
         }
-      );
+      );*/
       challenge.save( function(err, data) {
         if(err) {
           res.json(error);

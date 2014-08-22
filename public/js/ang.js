@@ -41,7 +41,7 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.createChallenge = function() {
       $http.post('/api/challenges', $scope.formData)
         .success(function(data) {
-          $scope.formData = {};
+          $scope.formData = {}; // clear the form so our user is ready to enter another
           $scope.challenge = data;
           console.log("data " + data);
         })
@@ -53,7 +53,7 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.addPhoto = function() {
       $http.put('/api/challenges', $scope.formData)
         .success(function(data) {
-          $scope.formData = {};
+          $scope.formData = {}; // clear the form so our user is ready to enter another
           $scope.photo = data;
           console.log("photo: " + JSON.stringify(data));
         })
