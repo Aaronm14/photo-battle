@@ -48,6 +48,8 @@ block content
           ul(style="margin-left:20px;")
             li(ng-repeat="photo in challenge.photos")
               p.challenge-image
-                img(src="{{ photo.url }}" style="max-width:200px; max-height:200px;")
+                img(ng-click="upVotePhoto(challenge._id,photo._id)" src="{{ photo.url }}" style="max-width:200px; max-height:200px;")
+                span Up Votes: {{ photo.upVotes }}
+                span Down Votes: {{ photo.downVotes }}
               p {{challenge.photo.downVotes}}
               p {{challenge.photo.upVotes}}

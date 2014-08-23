@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var photoSchema = new Schema ({
     url: { type: String },
-    upVotes: { tpe: Number },
-    downVotes: { tpe: Number }
+    upVotes: { type: Number },
+    downVotes: { type: Number }
 })
 
 var challengeSchema = new Schema({

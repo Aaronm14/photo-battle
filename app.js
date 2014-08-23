@@ -9,7 +9,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var errorHandler = require('errorhandler');
-var csrf = require('lusca').csrf();
+//var csrf = require('lusca').csrf();
 var methodOverride = require('method-override');
 
 var _ = require('lodash');
@@ -93,11 +93,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
   // CSRF protection.
   if (_.contains(csrfExclude, req.path)) return next();
   csrf(req, res, next);
-});
+});*/
 app.use(function(req, res, next) {
   // Make user object available in templates.
   res.locals.user = req.user;
@@ -161,26 +161,6 @@ app.get('/api/challenges', function(req, res) {
   });
 });
 
-app.put('/api/challenges', function(req, res) {
-  Challenge.findById(req.body.id._id, function(err, challenge) {
-    if(err)
-      res.json(err);
-    else {
-      challenge.photos.push({url: req.body.url,
-            upVotes: req.body.upVotes,
-            downVotes: req.body.downVotes});
-      challenge.save( function(err, data) {
-        if(err) {
-          res.json(err);
-        }
-        else {
-          res.json(data);
-        }
-      });
-    }
-  });
-});
-
 app.post('/api/challenges', function(req, res) {
 
   var challenge = new Challenge({
@@ -216,6 +196,57 @@ app.post('/api/challenges', function(req, res) {
     }
   });
 });
+
+app.put('/api/challenges', function(req, res) {
+  Challenge.findById(req.body.id._id, function(err, challenge) {
+    if(err)
+      res.json(err);
+    else {
+      challenge.photos.push({url: req.body.url, upVotes: req.body.upVotes, downVotes: req.body.downVotes});
+      challenge.save( function(err, data) {
+        if(err) {
+          res.json(err);
+        }
+        else {
+          res.json(data);
+        }
+      });
+    }
+  });
+});
+
+/*app.put('/api/challenges/:challenge_id', function(req,res) {
+  Challenge.findById(req.params.challenge_id, function(err, challenge) {
+    if (err) {
+      res.json(err);
+    }
+    else {
+      console.log(req.body.photoUrl)
+      console.log(challenge.photos.url);
+    }
+  })
+}); */
+app.put('/api/challenges/:challenge_id/photos/:photoId', function(req,res) {
+  Challenge.findById(req.params.challenge_id, function(err, challenge) {
+    if (err) {
+      res.json(err);
+    }
+    else {
+      var photo = challenge.photos.id(req.params.photoId);
+      photo.upVotes++;
+      console.log(photo.upVotes);
+    challenge.save( function(err, data) {
+        if(err) {
+          res.json(err);
+        }
+        else {
+          res.json(data);
+        }
+      });
+    }
+  })
+});
+
 /**
  * API examples routes.
  */

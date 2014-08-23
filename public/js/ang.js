@@ -61,4 +61,16 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
           console.log('Error: ' + JSON.stringify(data));
         });
     };
+
+    $scope.upVotePhoto = function(id, photoId) {
+      $http.put('/api/challenges/' + id + '/photos/' + photoId)
+        .success(function(data) {
+          $scope.formData = {}; // clear the form so our user is ready to enter another
+          $scope.photo = data;
+          console.log("photo: " + JSON.stringify(data));
+        })
+        .error(function(data) {
+          console.log('Error: ' + JSON.stringify(data));
+        });
+    };
 }]);
