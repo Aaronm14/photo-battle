@@ -163,38 +163,19 @@ app.get('/api/challenges', function(req, res) {
 
 app.post('/api/challenges', function(req, res) {
 
-  var challenge = new Challenge({
-    subject: req.body.subject,
-  });
-  challenge.save(function(err, challenge) {
-    if(err) {
-      res.json(error);
-    }
-    else {
-      /*Challenge.update(
-        {_id: challenge.id},
-        {$push: {
-          'photos': {
-            url: req.body.url,
-            upVotes: req.body.upVotes,
-            downVotes: req.body.downVotes
-          }
-        }
-        },
-        function(err, model) {
-          console.log(err);
-        }
-      );*/
-      challenge.save( function(err, data) {
-        if(err) {
-          res.json(error);
-        }
-        else {
-          res.json(data);
-        }
+  Challenge.create({
+    subject: req.body.subject
+  }, function(err, challenge) {
+      if(err)
+        res.send(err);
+      //get and return all the challenges after creating one
+      Challenge.find(function(err, challenges) {
+        if(err)
+          res.send(err);
+        res.json(challenges);
       });
-    }
   });
+
 });
 
 app.put('/api/challenges', function(req, res) {
@@ -208,7 +189,11 @@ app.put('/api/challenges', function(req, res) {
           res.json(err);
         }
         else {
-          res.json(data);
+          Challenge.find(function(err, challenges) {
+            if(err)
+                res.send(err);
+              res.json(challenges);
+            });
         }
       });
     }
@@ -239,9 +224,11 @@ app.put('/api/challenges/:challenge_id/photos/:photoId', function(req,res) {
         if(err) {
           res.json(err);
         }
-        else {
-          res.json(data);
-        }
+        Challenge.find(function(err, challenges) {
+          if(err)
+              res.send(err);
+            res.json(challenges);
+          });
       });
     }
   })

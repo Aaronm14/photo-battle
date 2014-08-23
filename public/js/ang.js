@@ -42,8 +42,8 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
       $http.post('/api/challenges', $scope.formData)
         .success(function(data) {
           $scope.formData = {}; // clear the form so our user is ready to enter another
-          $scope.challenge = data;
-          console.log("data " + data);
+          $scope.challenges = data;
+          console.log("data: " + data);
         })
         .error(function(data) {
           console.log('Error: ' + JSON.stringify(data));
@@ -54,7 +54,7 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
       $http.put('/api/challenges', $scope.formData)
         .success(function(data) {
           $scope.formData = {}; // clear the form so our user is ready to enter another
-          $scope.photo = data;
+          $scope.challenges = data;
           console.log("photo: " + JSON.stringify(data));
         })
         .error(function(data) {
@@ -66,7 +66,7 @@ app.controller('ChallengeCtrl', ['$scope', '$http', function($scope, $http) {
       $http.put('/api/challenges/' + id + '/photos/' + photoId)
         .success(function(data) {
           $scope.formData = {}; // clear the form so our user is ready to enter another
-          $scope.photo = data;
+          $scope.challenges = data;
           console.log("photo: " + JSON.stringify(data));
         })
         .error(function(data) {
