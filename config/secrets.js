@@ -16,10 +16,10 @@
  * refer to https://help.github.com/articles/remove-sensitive-data
 */
 
-module.exports = {
-
   var mongouser = process.env['MONGO_USER'];
   var mongopass= process.env['MONGO_PASS'];
+module.exports = {
+
   db: process.env.MONGODB|| 'mongodb://'+mongouser+':'+mongopass+'@ds051868.mongolab.com:51868/pick-em',
   //db: process.env.MONGODB|| 'mongodb://localhost:27017/test',
 
