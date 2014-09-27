@@ -164,7 +164,8 @@ app.get('/api/challenges', function(req, res) {
 app.post('/api/challenges', function(req, res) {
 
   Challenge.create({
-    subject: req.body.subject
+    subject: req.body.subject,
+    source: req.body.source
   }, function(err, challenge) {
       if(err)
         res.send(err);
@@ -183,7 +184,11 @@ app.put('/api/challenges', function(req, res) {
     if(err)
       res.json(err);
     else {
-      challenge.photos.push({url: req.body.url, upVotes: req.body.upVotes, downVotes: req.body.downVotes});
+      challenge.photos.push({
+        url: req.body.url,
+        title: req.body.title,
+        upVotes: 0
+      });
       challenge.save( function(err, data) {
         if(err) {
           res.json(err);
